@@ -4,6 +4,7 @@ import 'package:mobx/mobx.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
 
 import 'package:dollar_bill_tracker/model/list_item_model.dart';
+import 'package:dollar_bill_tracker/widget/drawer.dart';
 import 'package:dollar_bill_tracker/widget/searchBar.dart';
 import 'package:dollar_bill_tracker/widget/modalTrigger.dart';
 
@@ -45,6 +46,7 @@ class _ListScreenState extends State<ListScreen> {
       appBar: AppBar(
         title: Text('List'),
       ),
+      drawer: SettingsDrawer(),
       body: Observer(
         builder: (_) => ListView.builder(
           itemBuilder: (context, index) {
