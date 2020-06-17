@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 
 class DrawerOptions extends StatelessWidget {
-  IconData icon;
-  String text;
-  Function onTap;
+  final IconData icon;
+  final String text;
+  final Function onTap;
   DrawerOptions(this.icon, this.text, this.onTap);
 
   @override
@@ -37,5 +37,4 @@ class DrawerOptions extends StatelessWidget {
       onTap: onTap
     );
   }
-
 }
