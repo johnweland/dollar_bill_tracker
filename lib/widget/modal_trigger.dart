@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:dollar_bill_tracker/widget/newItemForm.dart';
+import 'package:dollar_bill_tracker/widget/new_item_form.dart';
 
 class ModalTrigger extends StatelessWidget {
 

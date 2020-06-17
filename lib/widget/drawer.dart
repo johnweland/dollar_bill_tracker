@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:dollar_bill_tracker/widget/drawerOptions.dart';
+import 'package:dollar_bill_tracker/widget/drawer_options.dart';
 
 class SettingsDrawer extends StatelessWidget {
   @override

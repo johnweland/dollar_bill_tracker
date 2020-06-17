@@ -23,7 +23,6 @@ class _NewItemFormState extends State<NewItemForm> {
                 borderRadius: BorderRadius.all(Radius.circular(5.0)),
               ),
               color: Colors.white,
-              
               child: Stack(
                 children: <Widget>[
                   Icon(

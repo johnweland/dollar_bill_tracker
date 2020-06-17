@@ -1,11 +1,11 @@
 import 'package:mobx/mobx.dart';
 
-class ListItem {
+class ListItemModel {
   @observable
   String serial;
   
   @observable
   String location;
 
-  ListItem({this.serial, this.location});
+  ListItemModel({this.serial, this.location});
 }

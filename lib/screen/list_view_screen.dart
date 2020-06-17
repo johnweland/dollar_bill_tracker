@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_mobx/flutter_mobx.dart';
 import 'package:mobx/mobx.dart';
-import 'package:flutter_slidable/flutter_slidable.dart';
 
 import 'package:dollar_bill_tracker/model/list_item_model.dart';
+import 'package:dollar_bill_tracker/widget/list_item.dart';
 import 'package:dollar_bill_tracker/widget/drawer.dart';
-import 'package:dollar_bill_tracker/widget/searchBar.dart';
-import 'package:dollar_bill_tracker/widget/modalTrigger.dart';
+import 'package:dollar_bill_tracker/widget/search_bar.dart';
+import 'package:dollar_bill_tracker/widget/modal_trigger.dart';
 
 class ListScreen extends StatefulWidget {
   @override
@@ -16,15 +16,15 @@ class ListScreen extends StatefulWidget {
 
 class _ListScreenState extends State<ListScreen> {
   @observable
-  ObservableList<ListItem> _items = ObservableList<ListItem>();
+  ObservableList<ListItemModel> _items = ObservableList<ListItemModel>();
 
   @observable 
-  ObservableList<ListItem> _itemsToDisplay = ObservableList<ListItem>();
+  ObservableList<ListItemModel> _itemsToDisplay = ObservableList<ListItemModel>();
 
   @override
   void initState() {
     super.initState();
-    setItems();
+    _setItems();
   }
 
   @override
@@ -32,11 +32,12 @@ class _ListScreenState extends State<ListScreen> {
     super.dispose();
   }
 
-  setItems() {
+  _setItems() {
     return _itemsToDisplay = _items..addAll([
-      ListItem(serial: 'ABC123M5208', location: '3, 2'),
-      ListItem(serial: 'FHW929M5208', location: '3, 1'),
-      ListItem(serial: 'ZYX987W0013', location: '2, 1'),
+      ListItemModel(serial: 'ABC124WX311', location: '3, 3'),
+      ListItemModel(serial: 'ABC123M5208', location: '3, 2'),
+      ListItemModel(serial: 'FHW929M5208', location: '3, 1'),
+      ListItemModel(serial: 'ZYX987W0013', location: '2, 1'),
     ]);
   }
 
@@ -52,7 +53,7 @@ class _ListScreenState extends State<ListScreen> {
           itemBuilder: (context, index) {
             return index == 0 ? SearchBar(_filter) : _listItem(index -1);
           },
-          itemCount: _items.length + 1 // items.length
+          itemCount: _items.length + 1
         ),
       ),
       floatingActionButton: ModalTrigger()
@@ -62,7 +63,7 @@ class _ListScreenState extends State<ListScreen> {
   _filter(value) {
     if (value == '') {
       _itemsToDisplay.clear();
-      setItems();
+      _setItems();
     } else {
       var _list =
         _itemsToDisplay.where((item) => item.serial
@@ -75,71 +76,12 @@ class _ListScreenState extends State<ListScreen> {
   }
 
   _listItem(index) {
-    return Padding(
-      padding: EdgeInsets.all(10.0),
-      child: Slidable(
-        actionPane: SlidableDrawerActionPane(),
-        actionExtentRatio: 0.25,
-        key: Key(_itemsToDisplay[index].serial),
-        child: Container(
-          decoration: BoxDecoration(
-            border: Border(
-              bottom: BorderSide(
-                color: Colors.grey,
-                width: .50,
-              ),
-            ),
-          ),
-          child: Padding(
-            padding: EdgeInsets.all(10.0),
-            child: Row(
-              children: <Widget>[
-                Expanded(
-                  child: Column(
-                    children: <Widget>[
-                      Text(
-                        'Serial Number',
-                        style: Theme.of(context).textTheme.caption,
-                      ),
-                      Text(_itemsToDisplay[index].serial),
-                    ],
-                  ),
-                ),
-                Expanded(
-                  child: Column(
-                    children: <Widget>[
-                      Text(
-                        'Location',
-                        style: Theme.of(context).textTheme.caption,
-                      ),
-                      Text(_itemsToDisplay[index].location),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          ),
-        ),
-        actions: <Widget>[
-          IconSlideAction(
-            caption: 'Edit',
-            color: Colors.grey[300],
-            icon: Icons.edit,
-            onTap: () => {},
-          ),
-        ],
-        secondaryActions: <Widget>[
-          IconSlideAction(
-            caption: 'Delete',
-            color: Colors.red[900],
-            icon: Icons.delete,
-            onTap: () => {
-              _items.removeAt(index)
-            },
-          ),
-        ],
-      )
-    );
+    return ListItem(
+      _itemsToDisplay[index].serial,
+      _itemsToDisplay[index].location,
+      ()=> {
+        _items.removeAt(index)
+      });
   }
 }
 
