@@ -7,8 +7,10 @@ import 'package:dollar_bill_tracker/widget/list_item.dart';
 import 'package:dollar_bill_tracker/widget/drawer.dart';
 import 'package:dollar_bill_tracker/widget/search_bar.dart';
 import 'package:dollar_bill_tracker/widget/modal_trigger.dart';
+import 'package:dollar_bill_tracker/store/list_item_store.dart';
 
 class ListScreen extends StatefulWidget {
+  final listItemStore = ListItemStore();
   @override
   _ListScreenState createState() => _ListScreenState();
 }
@@ -24,21 +26,17 @@ class _ListScreenState extends State<ListScreen> {
   @override
   void initState() {
     super.initState();
-    _setItems();
+    widget.listItemStore.init();
+    setItems();
+  }
+
+  setItems() {
+    return _itemsToDisplay = _items..addAll(widget.listItemStore.data);
   }
 
   @override
   void dispose() {
     super.dispose();
-  }
-
-  _setItems() {
-    return _itemsToDisplay = _items..addAll([
-      ListItemModel(serial: 'ABC124WX311', location: '3, 3'),
-      ListItemModel(serial: 'ABC123M5208', location: '3, 2'),
-      ListItemModel(serial: 'FHW929M5208', location: '3, 1'),
-      ListItemModel(serial: 'ZYX987W0013', location: '2, 1'),
-    ]);
   }
 
   @override
@@ -56,14 +54,13 @@ class _ListScreenState extends State<ListScreen> {
           itemCount: _items.length + 1
         ),
       ),
-      floatingActionButton: ModalTrigger()
+      floatingActionButton: ModalTrigger(()=> {_submit})
     );
   }
 
   _filter(value) {
     if (value == '') {
       _itemsToDisplay.clear();
-      _setItems();
     } else {
       var _list =
         _itemsToDisplay.where((item) => item.serial
@@ -77,11 +74,20 @@ class _ListScreenState extends State<ListScreen> {
 
   _listItem(index) {
     return ListItem(
-      _itemsToDisplay[index].serial,
-      _itemsToDisplay[index].location,
-      ()=> {
+      serial: _itemsToDisplay[index].serial,
+      location: _itemsToDisplay[index].location,
+      onTap: ()=> {
         _items.removeAt(index)
-      });
+      }
+    );
+  }
+
+  _submit(){
+      Navigator.of(context).pop();
+      _items.add(ListItemModel()
+      ..serial = "TEST"
+      ..location = "TEST");
+      _itemsToDisplay = _items;
   }
 }
 

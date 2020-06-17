@@ -5,7 +5,7 @@ class ListItem extends StatelessWidget {
   final String serial;
   final String location;
   final Function onTap;
-  ListItem(this.serial, this.location, this.onTap);
+  ListItem({@required this.serial, @required this.location, @required this.onTap});
 
   @override
   Widget build(BuildContext context) {
@@ -54,14 +54,6 @@ class ListItem extends StatelessWidget {
             ),
           ),
         ),
-        actions: <Widget>[
-          IconSlideAction(
-            caption: 'Edit',
-            color: Colors.grey[300],
-            icon: Icons.edit,
-            onTap: () => {},
-          ),
-        ],
         secondaryActions: <Widget>[
           IconSlideAction(
             caption: 'Delete',
