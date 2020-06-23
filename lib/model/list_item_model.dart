@@ -10,4 +10,6 @@ abstract class _ListItemModel with Store {
   
   @observable
   String location;
+
+  _ListItemModel({serial, location});
 }

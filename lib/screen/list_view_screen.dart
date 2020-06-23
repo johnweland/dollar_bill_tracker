@@ -46,13 +46,20 @@ class _ListScreenState extends State<ListScreen> {
         title: Text('List'),
       ),
       drawer: SettingsDrawer(),
-      body: Observer(
-        builder: (_) => ListView.builder(
-          itemBuilder: (context, index) {
-            return index == 0 ? SearchBar(_filter) : _listItem(index -1);
-          },
-          itemCount: _items.length + 1
-        ),
+      body: Column(
+        children: <Widget> [
+          SearchBar(_filter),
+          Expanded(
+            child: Observer(
+              builder: (_) => ListView.builder(
+                itemBuilder: (context, index) {
+                  return _listItem(index);
+                },
+                itemCount: _items.length
+              )
+            ),
+          )
+        ]
       ),
       floatingActionButton: ModalTrigger(()=> {_submit})
     );
@@ -83,6 +90,7 @@ class _ListScreenState extends State<ListScreen> {
   }
 
   _submit(){
+    print('===================');
       Navigator.of(context).pop();
       _items.add(ListItemModel()
       ..serial = "TEST"
