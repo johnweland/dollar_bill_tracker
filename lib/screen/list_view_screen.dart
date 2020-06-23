@@ -7,6 +7,7 @@ import 'package:dollar_bill_tracker/widget/list_item.dart';
 import 'package:dollar_bill_tracker/widget/drawer.dart';
 import 'package:dollar_bill_tracker/widget/search_bar.dart';
 import 'package:dollar_bill_tracker/widget/modal_trigger.dart';
+
 import 'package:dollar_bill_tracker/store/list_item_store.dart';
 
 class ListScreen extends StatefulWidget {
@@ -61,7 +62,7 @@ class _ListScreenState extends State<ListScreen> {
           )
         ]
       ),
-      floatingActionButton: ModalTrigger(()=> {_submit})
+      floatingActionButton: ModalTrigger(()=> _submit())
     );
   }
 
@@ -90,12 +91,11 @@ class _ListScreenState extends State<ListScreen> {
   }
 
   _submit(){
-    print('===================');
-      Navigator.of(context).pop();
-      _items.add(ListItemModel()
-      ..serial = "TEST"
-      ..location = "TEST");
-      _itemsToDisplay = _items;
+    _items.add(ListItemModel()
+    ..serial = "" //modalStore.newSerial
+    ..location = ""); //modalStore.newLocation);
+    _itemsToDisplay = _items;
+    Navigator.of(context).pop();
   }
 }
 

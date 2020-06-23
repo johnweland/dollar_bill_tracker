@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:dollar_bill_tracker/widget/new_item_form.dart';
-
+import 'package:dollar_bill_tracker/store/modal_store.dart';
 class ModalTrigger extends StatelessWidget {
+  final modalStore = ModalStore();
   final _formKey = GlobalKey<FormState>();
   final Function _submit;
   ModalTrigger(this._submit);
@@ -59,7 +59,9 @@ class ModalTrigger extends StatelessWidget {
                   }
                   return null;
                 },
-                //onSaved: (input) => _serial = input,
+                onSaved: (input) => {
+                  modalStore.newSerial = input
+                },
               ),
               TextFormField(
                 decoration: InputDecoration(
@@ -71,7 +73,9 @@ class ModalTrigger extends StatelessWidget {
                   }
                   return null;
                 },
-                //onSaved: (input) => _location = input,
+                onSaved: (input) => {
+                  modalStore.newLocation = input
+                },
               ),
               Align(
                 alignment: Alignment.bottomCenter,
@@ -82,7 +86,7 @@ class ModalTrigger extends StatelessWidget {
                       child: Text("Save"),
                       onPressed: () => {
                         if (_formKey.currentState.validate()){
-                          this._submit
+                          this._submit()
                         }
                       }
                     ),
